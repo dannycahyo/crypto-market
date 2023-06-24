@@ -1,6 +1,12 @@
 {
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "prettier", "react", "react-hooks", "jsx-a11y"],
+  "plugins": [
+    "@typescript-eslint",
+    "prettier",
+    "react",
+    "react-hooks",
+    "jsx-a11y"
+  ],
   "extends": [
     "eslint:recommended",
     "next/core-web-vitals",
@@ -10,7 +16,8 @@
     "plugin:react/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:react-hooks/recommended",
-    "next"
+    "next",
+    "plugin:storybook/recommended"
   ],
   "env": {
     "browser": true,
