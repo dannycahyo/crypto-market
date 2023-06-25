@@ -1,15 +1,15 @@
+import Image from "next/image";
+import { PriceChange } from "./PriceChange";
+
 import { Stat } from "../../uikits";
 import { isPositiveNumber } from "../../utils";
 
 import { TokenTableColumn } from "./TokenTableColumn";
-
 import { TokenData } from "../models";
 
 import type React from "react";
-import Image from "next/image";
-import { PriceChange } from "./PriceChange";
 type TokenTableProps = {
-  data: TokenData[];
+  data?: TokenData[];
   onFilterBy: (key: string) => void;
   onSortBy: (key: string) => void;
 };
@@ -96,49 +96,49 @@ const TokenTable: React.FC<TokenTableProps> = ({
           </tr>
         </thead>
         <tbody>
-          {data.map((token) => (
-            <tr key={token.currencySymbol}>
+          {data?.map((token) => (
+            <tr key={token?.currencySymbol}>
               <td>
                 <div className="flex items-center gap-3">
                   <Image
-                    src={token.logo}
-                    alt={token.currencySymbol}
+                    src={token?.logo}
+                    alt={token?.currencySymbol}
                     width={24}
                     height={24}
                   />
-                  <h3 className="text-base text-black ">{token.name}</h3>
+                  <h3 className="text-base text-black ">{token?.name}</h3>
                 </div>
               </td>
               <td>
                 <h3 className="text-base text-gray-300 ">
-                  {token.currencySymbol}
+                  {token?.currencySymbol}
                 </h3>
               </td>
               <td>
-                <PriceChange price={Number(token.latestPrice)} />
+                <PriceChange price={Number(token?.latestPrice)} />
               </td>
               <td>
                 <Stat
-                  type={isPositiveNumber(token.day) ? "success" : "danger"}
-                  label={token.day}
+                  type={isPositiveNumber(token?.day) ? "success" : "danger"}
+                  label={token?.day}
                 />
               </td>
               <td>
                 <Stat
-                  type={isPositiveNumber(token.week) ? "success" : "danger"}
-                  label={token.week}
+                  type={isPositiveNumber(token?.week) ? "success" : "danger"}
+                  label={token?.week}
                 />
               </td>
               <td>
                 <Stat
-                  type={isPositiveNumber(token.month) ? "success" : "danger"}
-                  label={token.month}
+                  type={isPositiveNumber(token?.month) ? "success" : "danger"}
+                  label={token?.month}
                 />
               </td>
               <td>
                 <Stat
-                  type={isPositiveNumber(token.year) ? "success" : "danger"}
-                  label={token.year}
+                  type={isPositiveNumber(token?.year) ? "success" : "danger"}
+                  label={token?.year}
                 />
               </td>
             </tr>
