@@ -10,8 +10,8 @@ import { TokenData } from "../models";
 import type React from "react";
 type TokenTableProps = {
   data?: TokenData[];
-  onFilterBy: (key: string) => void;
-  onSortBy: (key: string) => void;
+  onFilterBy: (category: string) => void;
+  onSortBy: (sort?: "asc" | "desc") => void;
 };
 
 const TokenTable: React.FC<TokenTableProps> = ({
@@ -32,12 +32,12 @@ const TokenTable: React.FC<TokenTableProps> = ({
               <TokenTableColumn
                 title="Harga"
                 onUpButtonClick={() => {
-                  onFilterBy("price");
-                  onSortBy("asc");
+                  onFilterBy("latestPrice");
+                  onSortBy("desc");
                 }}
                 onDownButtonClick={() => {
-                  onFilterBy("price");
-                  onSortBy("desc");
+                  onFilterBy("latestPrice");
+                  onSortBy("asc");
                 }}
               />
             </th>
@@ -46,11 +46,11 @@ const TokenTable: React.FC<TokenTableProps> = ({
                 title="24 JAM"
                 onUpButtonClick={() => {
                   onFilterBy("day");
-                  onSortBy("asc");
+                  onSortBy("desc");
                 }}
                 onDownButtonClick={() => {
                   onFilterBy("day");
-                  onSortBy("desc");
+                  onSortBy("asc");
                 }}
               />
             </th>
@@ -59,11 +59,11 @@ const TokenTable: React.FC<TokenTableProps> = ({
                 title="1 MGG"
                 onUpButtonClick={() => {
                   onFilterBy("week");
-                  onSortBy("asc");
+                  onSortBy("desc");
                 }}
                 onDownButtonClick={() => {
                   onFilterBy("week");
-                  onSortBy("desc");
+                  onSortBy("asc");
                 }}
               />
             </th>
@@ -72,11 +72,11 @@ const TokenTable: React.FC<TokenTableProps> = ({
                 title="1 BLN"
                 onUpButtonClick={() => {
                   onFilterBy("month");
-                  onSortBy("asc");
+                  onSortBy("desc");
                 }}
                 onDownButtonClick={() => {
                   onFilterBy("month");
-                  onSortBy("desc");
+                  onSortBy("asc");
                 }}
               />
             </th>
@@ -85,11 +85,11 @@ const TokenTable: React.FC<TokenTableProps> = ({
                 title="1 THN"
                 onUpButtonClick={() => {
                   onFilterBy("year");
-                  onSortBy("asc");
+                  onSortBy("desc");
                 }}
                 onDownButtonClick={() => {
                   onFilterBy("year");
-                  onSortBy("desc");
+                  onSortBy("asc");
                 }}
               />
             </th>

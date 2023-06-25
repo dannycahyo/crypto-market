@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { TokenTable } from "src/market/components";
 import { Currency, PriceChange, TokenData } from "src/market/models";
 import {
@@ -14,6 +15,9 @@ const TokenListWidget = () => {
     useGetPriceChanges({
       refetchInterval: 1000,
     });
+
+  const [sortByCategory, setSortByCategory] = useState<string>("");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">();
 
   function mergeCurrencyWithPriceChanges(
     supportedCurrencies?: Currency[],
@@ -47,9 +51,22 @@ const TokenListWidget = () => {
           return;
         }
       })
-      .filter(Boolean);
+      .filter(Boolean) as TokenData[];
 
-    return mergedData as TokenData[];
+    if (sortByCategory && sortOrder) {
+      mergedData.sort((a, b) => {
+        const aValue = parseFloat(a[sortByCategory as keyof TokenData]);
+        const bValue = parseFloat(b[sortByCategory as keyof TokenData]);
+
+        if (sortOrder === "asc") {
+          return aValue - bValue;
+        } else {
+          return bValue - aValue;
+        }
+      });
+    }
+
+    return mergedData;
   }
 
   const tokenData = mergeCurrencyWithPriceChanges(
@@ -74,8 +91,8 @@ const TokenListWidget = () => {
       ) : (
         <TokenTable
           data={tokenData}
-          onFilterBy={console.log}
-          onSortBy={console.log}
+          onFilterBy={(category) => setSortByCategory(category)}
+          onSortBy={(order) => setSortOrder(order)}
         />
       )}
     </div>
