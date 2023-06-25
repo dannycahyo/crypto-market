@@ -36,4 +36,12 @@ type TokenData = {
   logo: string;
 } & Omit<PriceChange, "pair">;
 
-export type { Wallet, Currency, PriceChange, TokenData };
+type TokenDetailByDate = {
+  name: string;
+  currencySymbol: string;
+  logo: string;
+  latestPrice: string;
+  percentage: string;
+};
+
+export type { Wallet, Currency, PriceChange, TokenData, TokenDetailByDate };
