@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { TokenTable } from "src/market/components";
+import {
+  TokenDetailByDate,
+  TokenTable,
+  TokenFilterByDate,
+} from "src/market/components";
 import { Currency, PriceChange, TokenData } from "src/market/models";
 import {
   useGetPriceChanges,
@@ -18,6 +22,7 @@ const TokenListWidget = () => {
 
   const [sortByCategory, setSortByCategory] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">();
+  const [selectedDate, setSelectedDate] = useState<string>("day");
 
   function mergeCurrencyWithPriceChanges(
     supportedCurrencies?: Currency[],
@@ -69,6 +74,10 @@ const TokenListWidget = () => {
     return mergedData;
   }
 
+  const handleSelectedDate = (date: string) => {
+    setSelectedDate(date);
+  };
+
   const tokenData = mergeCurrencyWithPriceChanges(
     supportedCurrencies,
     priceChanges
@@ -78,6 +87,16 @@ const TokenListWidget = () => {
     isLoadingSupportedCurrencies,
     isLoadingPriceChanges,
   ].every(Boolean);
+
+  const tokenDataByDate = tokenData?.map((token) => {
+    return {
+      name: token.name,
+      currencySymbol: token.currencySymbol,
+      logo: token.logo,
+      latestPrice: token.latestPrice,
+      percentage: token[selectedDate as keyof TokenData],
+    };
+  });
 
   return (
     <div>
@@ -89,11 +108,28 @@ const TokenListWidget = () => {
           <Skeleton />
         </>
       ) : (
-        <TokenTable
-          data={tokenData}
-          onFilterBy={(category) => setSortByCategory(category)}
-          onSortBy={(order) => setSortOrder(order)}
-        />
+        <>
+          <div className="hidden sm:block">
+            <TokenTable
+              data={tokenData}
+              onFilterBy={(category) => setSortByCategory(category)}
+              onSortBy={(order) => setSortOrder(order)}
+            />
+          </div>
+          <div className="block sm:hidden">
+            <TokenFilterByDate onFilterToken={handleSelectedDate} />
+            {tokenDataByDate?.map((token) => (
+              <TokenDetailByDate
+                key={token.currencySymbol}
+                name={token.name}
+                currencySymbol={token.currencySymbol}
+                logo={token.logo}
+                latestPrice={token.latestPrice}
+                percentage={token.percentage}
+              />
+            ))}
+          </div>
+        </>
       )}
     </div>
   );
