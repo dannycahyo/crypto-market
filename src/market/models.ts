@@ -44,4 +44,101 @@ type TokenDetailByDate = {
   percentage: string;
 };
 
-export type { Wallet, Currency, PriceChange, TokenData, TokenDetailByDate };
+type Language = {
+  id: number;
+  name: string;
+  created_at: string;
+  updated_at: string;
+};
+
+type Icon = {
+  id: number;
+  name: string;
+  hash: string;
+  sha256: string | null;
+  ext: string;
+  mime: string;
+  size: number;
+  url: string;
+  provider: string;
+  provider_metadata: string | null;
+  created_at: string;
+  updated_at: string;
+  alternativeText: string;
+  caption: string;
+  width: number;
+  height: number;
+  formats: string | null;
+  previewUrl: string | null;
+};
+
+type ImageFormat = {
+  ext: string;
+  url: string;
+  hash: string;
+  mime: string;
+  name: string;
+  path: string | null;
+  size: number;
+  width: number;
+  height: number;
+};
+
+type Image = {
+  id: number;
+  name: string;
+  hash: string;
+  sha256: string | null;
+  ext: string;
+  mime: string;
+  size: number;
+  url: string;
+  provider: string;
+  provider_metadata: string | null;
+  created_at: string;
+  updated_at: string;
+  alternativeText: string;
+  caption: string;
+  width: number;
+  height: number;
+  formats: {
+    small: ImageFormat;
+    thumbnail: ImageFormat;
+  };
+  previewUrl: string | null;
+};
+
+type CurrencyMarketTag = {
+  id: number;
+  name: string;
+  created_at: string;
+  updated_at: string;
+};
+
+type MarketTag = {
+  id: number;
+  title: string;
+  subtitle: string;
+  language: Language;
+  url: string | null;
+  published_at: string;
+  created_at: string;
+  updated_at: string;
+  statusbar: string;
+  order: number;
+  slug: string;
+  meta_title: string;
+  meta_description: string;
+  icon: Icon;
+  image: Image;
+  currencies: CurrencyMarketTag[];
+};
+
+export type {
+  Wallet,
+  Currency,
+  PriceChange,
+  TokenData,
+  TokenDetailByDate,
+  MarketTag,
+};

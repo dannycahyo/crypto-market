@@ -1,4 +1,9 @@
-import { Currency, PriceChange } from "./models";
+import { Currency, MarketTag, PriceChange } from "./models";
+
+type MarketTagParams = {
+  language: string;
+  sort: string;
+};
 
 async function getSupportedCurrencies(): Promise<Currency[]> {
   const response = await fetch(`/api/proxy?path=wallet/supportedCurrencies`);
@@ -24,4 +29,21 @@ async function getPriceChanges(): Promise<PriceChange[]> {
   return priceChanges;
 }
 
-export { getSupportedCurrencies, getPriceChanges };
+async function getMarketTags({
+  language,
+  sort,
+}: MarketTagParams): Promise<MarketTag[]> {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_CONTENT_API}/market-tags?language.name=${language}&_sort=order:${sort}`
+  );
+
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+
+  const data = await response.json();
+  return data;
+}
+
+export type { MarketTagParams };
+export { getSupportedCurrencies, getPriceChanges, getMarketTags };
