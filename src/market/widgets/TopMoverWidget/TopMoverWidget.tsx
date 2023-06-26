@@ -59,14 +59,14 @@ const TopMoverWidget = () => {
     mergeCurrencyWithPriceChanges
   );
 
-  const mergedCurrenciesWithPriceChanges =
+  const mergingCurrenciesWithPriceChanges =
     curriedMergeCurrencyWithPriceChanges(supportedCurrencies);
 
   const handleGettingTopMoverTokenData = compose(
     mapTopSixSortedCurrenciesWithPriceChangeByDay,
     getTopSixSortedCurrenciesWithPriceChangeByDay,
     sortingMergedCurrenciesWithPriceChangeByDay,
-    mergedCurrenciesWithPriceChanges
+    mergingCurrenciesWithPriceChanges
   );
 
   const tokenData = handleGettingTopMoverTokenData(
