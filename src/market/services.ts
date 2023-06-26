@@ -4,9 +4,10 @@ import {
   getSupportedCurrencies,
   getPriceChanges,
   getMarketTags,
+  getMarketTagDetail,
 } from "./fetcher";
 
-import type { MarketTagParams } from "./fetcher";
+import type { MarketTagDetailParams, MarketTagParams } from "./fetcher";
 import type { Currency, MarketTag, PriceChange } from "./models";
 import type { UseQueryOptions } from "@tanstack/react-query";
 
@@ -37,4 +38,20 @@ function useGetMarketTags(
   });
 }
 
-export { useGetSupportedCurrencies, useGetPriceChanges, useGetMarketTags };
+function useGetMarketTagDetail(
+  { slug, language }: MarketTagDetailParams,
+  options?: UseQueryOptions<MarketTag[]>
+) {
+  return useQuery<MarketTag[]>({
+    queryKey: ["marketTagDetail", { slug, language }],
+    queryFn: () => getMarketTagDetail({ slug, language }),
+    ...options,
+  });
+}
+
+export {
+  useGetSupportedCurrencies,
+  useGetPriceChanges,
+  useGetMarketTags,
+  useGetMarketTagDetail,
+};

@@ -5,6 +5,11 @@ type MarketTagParams = {
   sort: string;
 };
 
+type MarketTagDetailParams = {
+  slug: string;
+  language: string;
+};
+
 async function getSupportedCurrencies(): Promise<Currency[]> {
   const response = await fetch(`/api/proxy?path=wallet/supportedCurrencies`);
 
@@ -45,5 +50,26 @@ async function getMarketTags({
   return data;
 }
 
-export type { MarketTagParams };
-export { getSupportedCurrencies, getPriceChanges, getMarketTags };
+async function getMarketTagDetail({
+  slug,
+  language,
+}: MarketTagDetailParams): Promise<MarketTag[]> {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_CONTENT_API}/market-tags?slug_eq=${slug}&language.name=${language}`
+  );
+
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+
+  const data = await response.json();
+  return data;
+}
+
+export type { MarketTagParams, MarketTagDetailParams };
+export {
+  getSupportedCurrencies,
+  getPriceChanges,
+  getMarketTags,
+  getMarketTagDetail,
+};

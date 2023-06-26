@@ -141,4 +141,5 @@ export type {
   TokenData,
   TokenDetailByDate,
   MarketTag,
+  CurrencyMarketTag,
 };

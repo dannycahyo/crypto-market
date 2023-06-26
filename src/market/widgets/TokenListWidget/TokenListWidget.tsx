@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useState } from "react";
 import {
   TokenDetailByDate,
@@ -5,36 +6,76 @@ import {
   TokenFilterByDate,
 } from "src/market/components";
 import {
+  useGetMarketTagDetail,
   useGetPriceChanges,
   useGetSupportedCurrencies,
 } from "src/market/services";
 
 import { mergeCurrencyWithPriceChanges } from "src/market/utils";
-import { compose, curry } from "src/utils";
+import { compose, curry, getQuery } from "src/utils";
 
 import { Skeleton } from "src/uikits";
 
-import type { TokenData } from "src/market/models";
+import type { Currency, CurrencyMarketTag, TokenData } from "src/market/models";
 
-const TokenListWidget = () => {
+type TokenListWidgetProps = {
+  source: "market" | "market-tag";
+};
+
+const TokenListWidget = ({ source }: TokenListWidgetProps) => {
+  const router = useRouter();
+
+  const slug = getQuery(router.query.slug, "");
+
+  const { data: marketTags } = useGetMarketTagDetail(
+    { language: "ID", slug },
+    {
+      enabled: source === "market-tag",
+    }
+  );
   const { data: supportedCurrencies, isLoading: isLoadingSupportedCurrencies } =
     useGetSupportedCurrencies();
   const { data: priceChanges, isLoading: isLoadingPriceChanges } =
     useGetPriceChanges({
-      refetchInterval: 1000,
+      // refetchInterval: 1000,
     });
 
   const [sortByCategory, setSortByCategory] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">();
   const [selectedDate, setSelectedDate] = useState<string>("day");
 
-  const curriedMergeCurrencyWithPriceChanges = curry(
+  const filterCurrenciesByMarketTagCurrency = (
+    currencies?: Currency[],
+    marketTagCurrencies?: CurrencyMarketTag[]
+  ): Currency[] => {
+    if (!currencies || !marketTagCurrencies) {
+      return [];
+    }
+
+    const currencySymbols = new Set(
+      marketTagCurrencies.map((marketTagCurrency) => marketTagCurrency.name)
+    );
+
+    return currencies.filter((currency) =>
+      currencySymbols.has(currency.currencySymbol)
+    );
+  };
+
+  const currencies =
+    source === "market"
+      ? supportedCurrencies
+      : filterCurrenciesByMarketTagCurrency(
+          supportedCurrencies,
+          marketTags?.[0]?.currencies
+        );
+
+  const curriedMergeCurrenciesWithPriceChanges = curry(
     2,
     mergeCurrencyWithPriceChanges
   );
 
   const mergedCurrenciesByPriceChanges =
-    curriedMergeCurrencyWithPriceChanges(supportedCurrencies);
+    curriedMergeCurrenciesWithPriceChanges(currencies);
 
   const sortingMergedCurrenciesWithPriceChange = (mergedData: TokenData[]) => {
     if (sortByCategory && sortOrder) {
