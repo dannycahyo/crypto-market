@@ -1,4 +1,5 @@
 import {
+  SearchAssetWidget,
   TagListWidget,
   TokenListWidget,
   TopMoverWidget,
@@ -8,6 +9,7 @@ import { Container } from "src/uikits";
 const MarketListScreen = () => {
   return (
     <Container>
+      <SearchAssetWidget />
       <TopMoverWidget />
       <TagListWidget />
       <div className="divider my-0 before:bg-gray-800 after:bg-black" />
