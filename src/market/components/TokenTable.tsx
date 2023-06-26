@@ -27,7 +27,7 @@ const TokenTable: React.FC<TokenTableProps> = ({
             <th>
               <h3 className="text-base font-semibold text-gray-400">CRYPTO</h3>
             </th>
-            <th />
+            <th className="hidden xl:block" />
             <th>
               <TokenTableColumn
                 title="Harga"
@@ -109,7 +109,7 @@ const TokenTable: React.FC<TokenTableProps> = ({
                   <h3 className="text-base text-black ">{token?.name}</h3>
                 </div>
               </td>
-              <td>
+              <td className="hidden xl:block">
                 <h3 className="text-base text-gray-300 ">
                   {token?.currencySymbol}
                 </h3>
@@ -117,25 +117,25 @@ const TokenTable: React.FC<TokenTableProps> = ({
               <td>
                 <PriceChange price={Number(token?.latestPrice)} />
               </td>
-              <td>
+              <td className="px-1">
                 <Stat
                   type={isPositiveNumber(token?.day) ? "success" : "danger"}
                   label={token?.day}
                 />
               </td>
-              <td>
+              <td className="px-1">
                 <Stat
                   type={isPositiveNumber(token?.week) ? "success" : "danger"}
                   label={token?.week}
                 />
               </td>
-              <td>
+              <td className="px-1">
                 <Stat
                   type={isPositiveNumber(token?.month) ? "success" : "danger"}
                   label={token?.month}
                 />
               </td>
-              <td>
+              <td className="px-1">
                 <Stat
                   type={isPositiveNumber(token?.year) ? "success" : "danger"}
                   label={token?.year}
