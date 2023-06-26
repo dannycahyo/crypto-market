@@ -9,9 +9,13 @@ type TagCardProps = {
 
 const TagCard: React.FC<TagCardProps> = ({ iconURL, title }) => {
   return (
-    <div className="inline-flex  flex-row items-center justify-between rounded-lg bg-blue-200/[1] p-2 text-blue-500">
-      <Image src={iconURL} width={32} height={32} alt={title} />
-      <span className="ml-2 text-base text-blue-500">{title}</span>
+    <div className="flex flex-row  items-center gap-2 rounded-lg bg-blue-200/[1] p-2 text-blue-500">
+      <div className="h-6 w-6">
+        <Image src={iconURL} width={24} height={24} alt={title} />
+      </div>
+      <div className="whitespace-nowrap">
+        <p className=" text-xs text-blue-500">{title}</p>
+      </div>
     </div>
   );
 };
