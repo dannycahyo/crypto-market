@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 import { Stat } from "../../uikits/components";
-import { isPositiveNumber } from "src/utils";
+import { isPositiveNumber } from "../../utils";
 
 import type React from "react";
 import type { TokenDetailByDate } from "../models";
