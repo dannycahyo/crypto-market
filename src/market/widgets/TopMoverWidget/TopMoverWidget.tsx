@@ -86,10 +86,14 @@ const TopMoverWidget = () => {
       {isLoadingTokenData ? (
         <Skeleton />
       ) : (
-        <div className="grid grid-cols-6 gap-6">
-          {tokenData?.map((token) => (
-            <TokenCard key={token.currencySymbol} {...token} />
-          ))}
+        <div className="overflow-x-auto whitespace-nowrap">
+          <div className="flex gap-4 sm:grid sm:grid-cols-6 sm:gap-6">
+            {tokenData?.map((token) => (
+              <div className="flex-shrink-0" key={token.currencySymbol}>
+                <TokenCard {...token} />
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>

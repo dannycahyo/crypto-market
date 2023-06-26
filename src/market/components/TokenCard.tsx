@@ -31,6 +31,7 @@ const TokenCard: React.FC<TokenDetailByDate> = ({
         <Stat
           type={isPositiveNumber(percentage) ? "success" : "danger"}
           label={percentage}
+          size="large"
         />
       </div>
     </div>
