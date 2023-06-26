@@ -18,7 +18,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
       <input
         type="text"
         placeholder={placeholder}
-        className="rounded-md border border-gray-300  bg-white py-2 pl-12 pr-10 focus:border-blue-500 focus:outline-none focus:ring-blue-500"
+        className="rounded-md border border-gray-300  bg-gray-100 py-2 pl-12 pr-10 text-gray-600 focus:border-blue-500 focus:outline-none focus:ring-blue-500"
         value={value}
         onChange={onChange}
       />
