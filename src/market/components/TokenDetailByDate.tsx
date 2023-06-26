@@ -24,7 +24,7 @@ const TokenDetailByDate: React.FC<TokenDetailByDateProps> = ({
             <h3 className="text-base text-gray-300 ">{currencySymbol}</h3>
           </div>
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col items-end">
           <PriceChange price={Number(latestPrice)} />
           <Stat
             type={isPositiveNumber(percentage) ? "success" : "danger"}
@@ -32,7 +32,7 @@ const TokenDetailByDate: React.FC<TokenDetailByDateProps> = ({
           />
         </div>
       </div>
-      <div className="divider my-0" />
+      <div className="divider my-0 before:bg-gray-200 after:bg-gray-200" />
     </>
   );
 };
