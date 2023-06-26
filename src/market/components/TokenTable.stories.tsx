@@ -2,7 +2,7 @@ import { Meta, StoryFn } from "@storybook/react";
 
 import { TokenTable } from "./TokenTable";
 
-import { tokenData } from "../../constant/tokenData";
+import { tokenData } from "../../constant";
 
 export default {
   title: "Market/Components/TokenTable",
@@ -16,5 +16,5 @@ export const Default = Template.bind({});
 Default.args = {
   data: tokenData,
   onFilterBy: (key: string) => console.log(key),
-  onSortBy: (key: string) => console.log(key),
+  onSortBy: (key?: "asc" | "desc") => console.log(key),
 };
