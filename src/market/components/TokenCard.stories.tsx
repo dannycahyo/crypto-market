@@ -16,19 +16,19 @@ const Template: StoryFn<typeof TokenCard> = (args) => (
 export const Default = Template.bind({});
 
 Default.args = {
-  title: "Waves",
-  dayPercentage: 58.68,
-  price: 37.199,
-  imageURL:
-    "https://s3-ap-southeast-1.amazonaws.com/static.pintu.co.id/assets/images/logo/circle_WAVES.svg",
+  name: "Waves",
+  percentage: "58.68",
+  latestPrice: "37.199",
+  logo: "https://s3-ap-southeast-1.amazonaws.com/static.pintu.co.id/assets/images/logo/circle_WAVES.svg",
+  currencySymbol: "WAVES",
 };
 
 export const TruncatedTitle = Template.bind({});
 
 TruncatedTitle.args = {
-  title: "OMG Network",
-  dayPercentage: 11.68,
-  price: 21.199,
-  imageURL:
-    "https://s3-ap-southeast-1.amazonaws.com/static.pintu.co.id/assets/images/logo/circle_OMG.svg",
+  name: "OMG Network",
+  percentage: "11.68",
+  latestPrice: "21.199",
+  logo: "https://s3-ap-southeast-1.amazonaws.com/static.pintu.co.id/assets/images/logo/circle_OMG.svg",
+  currencySymbol: "OMG",
 };
