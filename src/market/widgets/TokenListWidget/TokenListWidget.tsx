@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { useState } from "react";
 import {
   TokenDetailByDate,
@@ -12,7 +11,7 @@ import {
 } from "src/market/services";
 
 import { mergeCurrencyWithPriceChanges } from "src/market/utils";
-import { compose, curry, getQuery } from "src/utils";
+import { compose, curry } from "src/utils";
 
 import { Skeleton } from "src/uikits";
 
