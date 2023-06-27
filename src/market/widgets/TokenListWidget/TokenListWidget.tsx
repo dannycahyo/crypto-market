@@ -37,7 +37,7 @@ const TokenListWidget = ({ source }: TokenListWidgetProps) => {
     useGetSupportedCurrencies();
   const { data: priceChanges, isLoading: isLoadingPriceChanges } =
     useGetPriceChanges({
-      // refetchInterval: 1000,
+      refetchInterval: 1000,
     });
 
   const [sortByCategory, setSortByCategory] = useState<string>("");
