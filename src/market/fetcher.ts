@@ -11,7 +11,11 @@ type MarketTagDetailParams = {
 };
 
 async function getSupportedCurrencies(): Promise<Currency[]> {
-  const response = await fetch(`/api/proxy?path=wallet/supportedCurrencies`);
+  const baseUrl =
+    typeof window === "undefined"
+      ? "http://localhost:3000/api/proxy?path=wallet/supportedCurrencies"
+      : "/api/proxy?path=wallet/supportedCurrencies";
+  const response = await fetch(baseUrl);
 
   if (!response.ok) {
     throw new Error("Network response was not ok");
@@ -23,7 +27,11 @@ async function getSupportedCurrencies(): Promise<Currency[]> {
 }
 
 async function getPriceChanges(): Promise<PriceChange[]> {
-  const response = await fetch(`/api/proxy?path=trade/price-changes`);
+  const baseUrl =
+    typeof window === "undefined"
+      ? "http://localhost:3000/api/proxy?path=trade/price-changes"
+      : "/api/proxy?path=trade/price-changes";
+  const response = await fetch(baseUrl);
 
   if (!response.ok) {
     throw new Error("Network response was not ok");
