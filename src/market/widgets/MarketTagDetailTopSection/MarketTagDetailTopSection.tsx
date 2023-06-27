@@ -1,15 +1,17 @@
-import { useRouter } from "next/router";
-import { useGetMarketTagDetail } from "../../services";
-import { getQuery } from "src/utils";
 import Link from "next/link";
 import Image from "next/image";
+
+import { useGetMarketTagDetail } from "src/market/services";
 import { Skeleton } from "src/uikits";
 
-const MarketTagDetailTopSection = () => {
-  const router = useRouter();
+import type React from "react";
+type MarketTagDetailTopSectionProps = {
+  slug: string;
+};
 
-  const slug = getQuery(router.query.slug, "");
-
+const MarketTagDetailTopSection: React.FC<MarketTagDetailTopSectionProps> = ({
+  slug,
+}) => {
   const { data: marketTags, isLoading: isLoadingMarketTags } =
     useGetMarketTagDetail({ language: "ID", slug });
 

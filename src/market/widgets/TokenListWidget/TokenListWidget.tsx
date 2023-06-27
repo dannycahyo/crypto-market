@@ -20,15 +20,12 @@ import type { Currency, CurrencyMarketTag, TokenData } from "src/market/models";
 
 type TokenListWidgetProps = {
   source: "market" | "market-tag";
+  slug?: string;
 };
 
-const TokenListWidget = ({ source }: TokenListWidgetProps) => {
-  const router = useRouter();
-
-  const slug = getQuery(router.query.slug, "");
-
+const TokenListWidget = ({ source, slug }: TokenListWidgetProps) => {
   const { data: marketTags } = useGetMarketTagDetail(
-    { language: "ID", slug },
+    { language: "ID", slug: slug ?? "" },
     {
       enabled: source === "market-tag",
     }

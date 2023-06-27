@@ -11,9 +11,13 @@ import { getQuery } from "src/utils";
 import type { MainProps } from "../../../_app";
 import type { GetServerSideProps } from "next";
 
-export const getServerSideProps: GetServerSideProps<MainProps> = async ({
-  query,
-}) => {
+type MarketTagDetailScreenProps = {
+  slug: string;
+};
+
+export const getServerSideProps: GetServerSideProps<
+  MainProps & MarketTagDetailScreenProps
+> = async ({ query }) => {
   const queryClient = new QueryClient();
 
   const slug = getQuery(query.slug, "");
@@ -30,9 +34,11 @@ export const getServerSideProps: GetServerSideProps<MainProps> = async ({
 
   return {
     props: {
+      slug,
       dehydratedState: dehydrate(queryClient),
     },
   };
 };
 
+export type { MarketTagDetailScreenProps };
 export default MarketTagDetailScreen;
