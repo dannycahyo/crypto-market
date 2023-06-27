@@ -8,7 +8,7 @@ export default {
 } as Meta<typeof TokenCard>;
 
 const Template: StoryFn<typeof TokenCard> = (args) => (
-  <div className="h-32 w-32">
+  <div className="w-32">
     <TokenCard {...args} />
   </div>
 );

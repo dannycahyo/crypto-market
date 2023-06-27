@@ -7,7 +7,11 @@ export default {
   component: TagCard,
 } as Meta<typeof TagCard>;
 
-const Template: StoryFn<typeof TagCard> = (args) => <TagCard {...args} />;
+const Template: StoryFn<typeof TagCard> = (args) => (
+  <div className="w-24">
+    <TagCard {...args} />
+  </div>
+);
 
 export const Default = Template.bind({});
 
