@@ -22,8 +22,8 @@ This project is a replication of the [Pintu Market Page](https://pintu.co.id/mar
 
 ## Demo
 
-- [Live Demo](https://crypto-market-apps.vercel.app/)
-- [Storybook Documentation](https://crypto-market-apps-stories.vercel.app/)
+- **Website** [Live Demo](https://crypto-market-apps.vercel.app/)
+- **Story Book** [Storybook Documentation](https://crypto-market-apps-stories.vercel.app/)
 
 ## Installation
 
