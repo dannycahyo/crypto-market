@@ -14,7 +14,8 @@ async function getSupportedCurrencies(): Promise<Currency[]> {
   const baseUrl =
     process.env.NODE_ENV === "development"
       ? process.env.NEXT_PUBLIC_BASE_URL_DEV
-      : process.env.NEXT_PUBLIC_BASE_URL_PROD;
+      : process.env.NEXT_PUBLIC_BASE_URL_PROD ??
+        process.env.STORYBOOK_PUBLIC_BASE_URL_PROD;
 
   const response = await fetch(
     `${baseUrl}/api/proxy?path=wallet/supportedCurrencies`
@@ -33,7 +34,8 @@ async function getPriceChanges(): Promise<PriceChange[]> {
   const baseUrl =
     process.env.NODE_ENV === "development"
       ? process.env.NEXT_PUBLIC_BASE_URL_DEV
-      : process.env.NEXT_PUBLIC_BASE_URL_PROD;
+      : process.env.NEXT_PUBLIC_BASE_URL_PROD ??
+        process.env.STORYBOOK_PUBLIC_BASE_URL_PROD;
 
   const response = await fetch(`${baseUrl}/api/proxy?path=trade/price-changes`);
 
@@ -50,8 +52,11 @@ async function getMarketTags({
   language,
   sort,
 }: MarketTagParams): Promise<MarketTag[]> {
+  const baseUrl =
+    process.env.NEXT_PUBLIC_CONTENT_API ??
+    process.env.STORYBOOK_PUBLIC_CONTENT_API;
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_CONTENT_API}/market-tags?language.name=${language}&_sort=order:${sort}`
+    `${baseUrl}/market-tags?language.name=${language}&_sort=order:${sort}`
   );
 
   if (!response.ok) {
@@ -66,8 +71,11 @@ async function getMarketTagDetail({
   slug,
   language,
 }: MarketTagDetailParams): Promise<MarketTag[]> {
+  const baseUrl =
+    process.env.NEXT_PUBLIC_CONTENT_API ??
+    process.env.STORYBOOK_PUBLIC_CONTENT_API;
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_CONTENT_API}/market-tags?slug_eq=${slug}&language.name=${language}`
+    `${baseUrl}/market-tags?slug_eq=${slug}&language.name=${language}`
   );
 
   if (!response.ok) {
