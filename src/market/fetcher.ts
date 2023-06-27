@@ -54,7 +54,7 @@ async function getMarketTags({
 }: MarketTagParams): Promise<MarketTag[]> {
   const baseUrl =
     process.env.NEXT_PUBLIC_CONTENT_API ??
-    process.env.STORYBOOK_PUBLIC_BASE_URL_PROD;
+    process.env.STORYBOOK_PUBLIC_CONTENT_API;
   const response = await fetch(
     `${baseUrl}/market-tags?language.name=${language}&_sort=order:${sort}`
   );
@@ -73,7 +73,7 @@ async function getMarketTagDetail({
 }: MarketTagDetailParams): Promise<MarketTag[]> {
   const baseUrl =
     process.env.NEXT_PUBLIC_CONTENT_API ??
-    process.env.STORYBOOK_PUBLIC_BASE_URL_PROD;
+    process.env.STORYBOOK_PUBLIC_CONTENT_API;
   const response = await fetch(
     `${baseUrl}/market-tags?slug_eq=${slug}&language.name=${language}`
   );
