@@ -12,10 +12,13 @@ type MarketTagDetailParams = {
 
 async function getSupportedCurrencies(): Promise<Currency[]> {
   const baseUrl =
-    typeof window === "undefined"
-      ? "http://localhost:3000/api/proxy?path=wallet/supportedCurrencies"
-      : "/api/proxy?path=wallet/supportedCurrencies";
-  const response = await fetch(baseUrl);
+    process.env.NODE_ENV === "development"
+      ? process.env.NEXT_PUBLIC_BASE_URL_DEV
+      : process.env.NEXT_PUBLIC_BASE_URL_PROD;
+
+  const response = await fetch(
+    `${baseUrl}/api/proxy?path=wallet/supportedCurrencies`
+  );
 
   if (!response.ok) {
     throw new Error("Network response was not ok");
@@ -28,10 +31,11 @@ async function getSupportedCurrencies(): Promise<Currency[]> {
 
 async function getPriceChanges(): Promise<PriceChange[]> {
   const baseUrl =
-    typeof window === "undefined"
-      ? "http://localhost:3000/api/proxy?path=trade/price-changes"
-      : "/api/proxy?path=trade/price-changes";
-  const response = await fetch(baseUrl);
+    process.env.NODE_ENV === "development"
+      ? process.env.NEXT_PUBLIC_BASE_URL_DEV
+      : process.env.NEXT_PUBLIC_BASE_URL_PROD;
+
+  const response = await fetch(`${baseUrl}/api/proxy?path=trade/price-changes`);
 
   if (!response.ok) {
     throw new Error("Network response was not ok");
