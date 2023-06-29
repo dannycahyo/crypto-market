@@ -22,19 +22,6 @@ Default.args = {};
 export const MockedSuccess = Template.bind({});
 export const MockedError = Template.bind({});
 
-MockedSuccess.play = async ({ canvasElement, step }) => {
-  const canvas = within(canvasElement);
-  await step("wait for loading to be finished", async () => {
-    await waitForElementToBeRemoved(() => canvas.queryAllByRole("progressbar"));
-  });
-
-  expect(
-    canvas.getByRole("link", {
-      name: "Terbaru Terbaru",
-    })
-  );
-};
-
 MockedSuccess.parameters = {
   msw: [
     rest.get(
@@ -51,8 +38,36 @@ MockedError.parameters = {
     rest.get(
       `${process.env.STORYBOOK_PUBLIC_CONTENT_API}/market-tags?language.name=ID&_sort=order:ASC`,
       (_req, res, ctx) => {
-        return res(ctx.delay(800), ctx.status(403));
+        return res(ctx.delay(800), ctx.status(500));
       }
     ),
   ],
+};
+
+MockedSuccess.play = async ({ canvasElement, step }) => {
+  const canvas = within(canvasElement);
+  await step("wait for loading to be finished", async () => {
+    await waitForElementToBeRemoved(() => canvas.queryByRole("progressbar"));
+  });
+
+  expect(
+    canvas.getByRole("link", {
+      name: "Terbaru Terbaru",
+    })
+  ).toBeInTheDocument();
+};
+
+MockedError.play = async ({ canvasElement, step }) => {
+  const canvas = within(canvasElement);
+  await step("wait for loading to be finished", async () => {
+    await waitForElementToBeRemoved(() => canvas.queryByRole("progressbar"), {
+      timeout: 30000,
+    });
+  });
+
+  expect(
+    canvas.getByRole("alert", {
+      name: "General Error",
+    })
+  ).toBeInTheDocument();
 };
