@@ -64,8 +64,19 @@ npm run start
 
 To run the storybook documentation, use:
 
+\*Notes.
+Please kindly run the application as well to get the data from the API.
+
 ```bash
 npm run storybook
+```
+
+To run the test, use:
+\*Notes.
+Please kindly run the storybook server as well.
+
+```bash
+npm test-storybook
 ```
 
 ## Project Architecture
