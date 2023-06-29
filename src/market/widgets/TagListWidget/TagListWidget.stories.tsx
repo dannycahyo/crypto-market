@@ -1,6 +1,8 @@
 import { rest } from "msw";
-import { TagListWidget } from "./TagListWidget";
+import { expect } from "@storybook/jest";
+import { within, waitForElementToBeRemoved } from "@storybook/testing-library";
 
+import { TagListWidget } from "./TagListWidget";
 import { TagListTestData } from "src/constant";
 
 import type { Meta, StoryFn } from "@storybook/react";
@@ -19,6 +21,19 @@ Default.args = {};
 
 export const MockedSuccess = Template.bind({});
 export const MockedError = Template.bind({});
+
+MockedSuccess.play = async ({ canvasElement, step }) => {
+  const canvas = within(canvasElement);
+  await step("wait for loading to be finished", async () => {
+    await waitForElementToBeRemoved(() => canvas.queryAllByRole("progressbar"));
+  });
+
+  expect(
+    canvas.getByRole("link", {
+      name: "Terbaru Terbaru",
+    })
+  );
+};
 
 MockedSuccess.parameters = {
   msw: [

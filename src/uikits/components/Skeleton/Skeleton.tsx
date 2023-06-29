@@ -1,6 +1,9 @@
 const Skeleton = () => {
   return (
-    <div className="mx-auto w-full rounded-md border border-gray-300 p-4 shadow">
+    <div
+      className="mx-auto w-full rounded-md border border-gray-300 p-4 shadow"
+      role="progressbar"
+    >
       <div className="flex animate-pulse space-x-4">
         <div className="flex-1 space-y-6 py-1">
           <div className="h-2 rounded bg-slate-700" />
