@@ -1,7 +1,7 @@
 import { Meta, StoryFn } from "@storybook/react";
 
 import { CurrencyList } from "./CurrencyList";
-import { currencies } from "../../constant";
+import { SupportedCurrenciesTestData } from "src/constant";
 
 export default {
   title: "Market/Components/CurrencyList",
@@ -17,5 +17,5 @@ const Template: StoryFn<typeof CurrencyList> = (args) => (
 export const Default = Template.bind({});
 
 Default.args = {
-  currencies,
+  currencies: SupportedCurrenciesTestData,
 };
