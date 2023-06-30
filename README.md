@@ -8,6 +8,7 @@ This project is a replication of the [Pintu Market Page](https://pintu.co.id/mar
 - [Demo](#demo)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Testing](#testing)
 - [Project Architecture](#project-architecture)
 - [Folder Structure](#folder-structure)
 - [Improvement Opportunities](#improvement-opportunities)
@@ -65,18 +66,27 @@ npm run start
 To run the storybook documentation, use:
 
 \*Notes.
-Please kindly run the application as well to get the data from the API.
+Please kindly run the application development server as well to get the data from the API.
 
 ```bash
 npm run storybook
 ```
 
+## Testing
+
 To run the test, use:
+
 \*Notes.
 Please kindly run the storybook server as well.
 
 ```bash
 npm test-storybook
+```
+
+To get the coverage of the overall test, use:
+
+```bash
+npm run test-storybook --coverage
 ```
 
 ## Project Architecture
@@ -111,7 +121,7 @@ The [Fetcher](https://github.com/dannycahyo/crypto-market/blob/main/src/market/f
 
 ### Models
 
-The [Models](https://github.com/dannycahyo/crypto-market/blob/main/src/market/models.ts)layer defines the structure and shape of the data used within the application. It focuses on establishing clear and consistent data models for entities such as Currency, PriceChange, or other relevant data structures.
+The [Models](https://github.com/dannycahyo/crypto-market/blob/main/src/market/models.ts) layer defines the structure and shape of the data used within the application. It focuses on establishing clear and consistent data models for entities such as Currency, PriceChange, or other relevant data structures.
 
 ---
 
