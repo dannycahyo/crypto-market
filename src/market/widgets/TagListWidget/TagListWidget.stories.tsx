@@ -19,21 +19,21 @@ const Template: StoryFn<Story> = () => <TagListWidget />;
 export const Default = Template.bind({});
 Default.args = {};
 
-export const MockedSuccess = Template.bind({});
-export const MockedError = Template.bind({});
+export const TagListWidgetSuccess = Template.bind({});
+export const TagListWidgetError = Template.bind({});
 
-MockedSuccess.parameters = {
+TagListWidgetSuccess.parameters = {
   msw: [
     rest.get(
       `${process.env.STORYBOOK_PUBLIC_CONTENT_API}/market-tags?language.name=ID&_sort=order:ASC`,
       (_req, res, ctx) => {
-        return res(ctx.json([TagListTestData]));
+        return res(ctx.json(TagListTestData));
       }
     ),
   ],
 };
 
-MockedError.parameters = {
+TagListWidgetError.parameters = {
   msw: [
     rest.get(
       `${process.env.STORYBOOK_PUBLIC_CONTENT_API}/market-tags?language.name=ID&_sort=order:ASC`,
@@ -44,7 +44,7 @@ MockedError.parameters = {
   ],
 };
 
-MockedSuccess.play = async ({ canvasElement, step }) => {
+TagListWidgetSuccess.play = async ({ canvasElement, step }) => {
   const canvas = within(canvasElement);
   await step("wait for loading to be finished", async () => {
     await waitForElementToBeRemoved(() => canvas.queryByRole("progressbar"));
@@ -57,7 +57,7 @@ MockedSuccess.play = async ({ canvasElement, step }) => {
   ).toBeInTheDocument();
 };
 
-MockedError.play = async ({ canvasElement, step }) => {
+TagListWidgetError.play = async ({ canvasElement, step }) => {
   const canvas = within(canvasElement);
   await step("wait for loading to be finished", async () => {
     await waitForElementToBeRemoved(() => canvas.queryByRole("progressbar"), {
