@@ -9,10 +9,14 @@ import { FaSearch } from "react-icons/fa";
 import { CurrencyList } from "src/market/components";
 
 import { useGetSupportedCurrencies } from "src/market/services";
-import { SearchInput } from "src/uikits";
+import { GeneralError, SearchInput, Skeleton } from "src/uikits";
 
 const SearchAssetWidget = () => {
-  const { data: supportedCurrencies } = useGetSupportedCurrencies();
+  const {
+    data: supportedCurrencies,
+    isLoading: isLoadingSupportedCurrencies,
+    isError: isErrorSupportedCurrencies,
+  } = useGetSupportedCurrencies();
   const [searchAsset, setSearchAsset] = useState<string>("");
 
   const handleAssetSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,6 +26,14 @@ const SearchAssetWidget = () => {
   const filteredSupportedCurrencies = supportedCurrencies?.filter((currency) =>
     currency.name.toLowerCase().includes(searchAsset.toLowerCase())
   );
+
+  const renderCurrencyList = () => {
+    if (isLoadingSupportedCurrencies) return <Skeleton />;
+    if (isErrorSupportedCurrencies)
+      return <GeneralError message="Failed to get the currencies" />;
+
+    return <CurrencyList currencies={filteredSupportedCurrencies} />;
+  };
 
   return (
     <div className="mb-6 mt-4 flex items-center justify-between">
@@ -62,9 +74,7 @@ const SearchAssetWidget = () => {
                     ✕
                   </button>
                 </div>
-                <div className="mt-4">
-                  <CurrencyList currencies={filteredSupportedCurrencies} />
-                </div>
+                <div className="mt-4">{renderCurrencyList()}</div>
               </form>
             </dialog>
           </div>
@@ -74,7 +84,7 @@ const SearchAssetWidget = () => {
           className="dropdown-content menu rounded-box z-[1] bg-white p-2 shadow hover:bg-white"
         >
           <div className="hidden h-64 w-64 overflow-y-auto whitespace-nowrap sm:block">
-            <CurrencyList currencies={filteredSupportedCurrencies} />
+            {renderCurrencyList()}
           </div>
         </ul>
       </div>
