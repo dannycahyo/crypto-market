@@ -10,12 +10,15 @@ import {
   useGetSupportedCurrencies,
 } from "src/market/services";
 
-import { mergeCurrencyWithPriceChanges } from "src/market/utils";
+import {
+  filterCurrenciesByMarketTagCurrency,
+  mergeCurrencyWithPriceChanges,
+} from "src/market/utils";
 import { compose, curry } from "src/utils";
 
-import { Skeleton } from "src/uikits";
+import { GeneralError, Skeleton } from "src/uikits";
 
-import type { Currency, CurrencyMarketTag, TokenData } from "src/market/models";
+import type { TokenData } from "src/market/models";
 
 type TokenListWidgetProps = {
   source: "market" | "market-tag";
@@ -29,33 +32,22 @@ const TokenListWidget = ({ source, slug }: TokenListWidgetProps) => {
       enabled: source === "market-tag",
     }
   );
-  const { data: supportedCurrencies, isLoading: isLoadingSupportedCurrencies } =
-    useGetSupportedCurrencies();
-  const { data: priceChanges, isLoading: isLoadingPriceChanges } =
-    useGetPriceChanges({
-      refetchInterval: 1000,
-    });
+  const {
+    data: supportedCurrencies,
+    isLoading: isLoadingSupportedCurrencies,
+    isError: isErrorSupportedCurrencies,
+  } = useGetSupportedCurrencies();
+  const {
+    data: priceChanges,
+    isLoading: isLoadingPriceChanges,
+    isError: isErrorPriceChanges,
+  } = useGetPriceChanges({
+    refetchInterval: 1000,
+  });
 
   const [sortByCategory, setSortByCategory] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">();
   const [selectedDate, setSelectedDate] = useState<string>("day");
-
-  const filterCurrenciesByMarketTagCurrency = (
-    currencies?: Currency[],
-    marketTagCurrencies?: CurrencyMarketTag[]
-  ): Currency[] => {
-    if (!currencies || !marketTagCurrencies) {
-      return [];
-    }
-
-    const currencySymbols = new Set(
-      marketTagCurrencies.map((marketTagCurrency) => marketTagCurrency.name)
-    );
-
-    return currencies.filter((currency) =>
-      currencySymbols.has(currency.currencySymbol)
-    );
-  };
 
   const currencies =
     source === "market"
@@ -106,6 +98,11 @@ const TokenListWidget = ({ source, slug }: TokenListWidgetProps) => {
     isLoadingPriceChanges,
   ].every(Boolean);
 
+  const isErrorTokenData = [
+    isErrorSupportedCurrencies,
+    isErrorPriceChanges,
+  ].some(Boolean);
+
   const tokenDataByDate = tokenData?.map((token) => {
     return {
       name: token.name,
@@ -116,39 +113,43 @@ const TokenListWidget = ({ source, slug }: TokenListWidgetProps) => {
     };
   });
 
+  if (isLoadingTokenData)
+    return (
+      <>
+        <Skeleton />
+        <Skeleton />
+        <Skeleton />
+        <Skeleton />
+      </>
+    );
+
+  if (isErrorTokenData)
+    return (
+      <GeneralError message="There is something wrong when getting the token content. Please try again later." />
+    );
+
   return (
     <div>
-      {isLoadingTokenData ? (
-        <>
-          <Skeleton />
-          <Skeleton />
-          <Skeleton />
-          <Skeleton />
-        </>
-      ) : (
-        <>
-          <div className="hidden sm:block">
-            <TokenTable
-              data={tokenData}
-              onFilterBy={(category) => setSortByCategory(category)}
-              onSortBy={(order) => setSortOrder(order)}
-            />
-          </div>
-          <div className="block sm:hidden">
-            <TokenFilterByDate onFilterToken={handleSelectedDate} />
-            {tokenDataByDate?.map((token) => (
-              <TokenDetailByDate
-                key={token.currencySymbol}
-                name={token.name}
-                currencySymbol={token.currencySymbol}
-                logo={token.logo}
-                latestPrice={token.latestPrice}
-                percentage={token.percentage}
-              />
-            ))}
-          </div>
-        </>
-      )}
+      <div className="hidden sm:block">
+        <TokenTable
+          data={tokenData}
+          onFilterBy={(category) => setSortByCategory(category)}
+          onSortBy={(order) => setSortOrder(order)}
+        />
+      </div>
+      <div className="block sm:hidden">
+        <TokenFilterByDate onFilterToken={handleSelectedDate} />
+        {tokenDataByDate?.map((token) => (
+          <TokenDetailByDate
+            key={token.currencySymbol}
+            name={token.name}
+            currencySymbol={token.currencySymbol}
+            logo={token.logo}
+            latestPrice={token.latestPrice}
+            percentage={token.percentage}
+          />
+        ))}
+      </div>
     </div>
   );
 };
