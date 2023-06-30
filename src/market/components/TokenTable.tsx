@@ -120,25 +120,25 @@ const TokenTable: React.FC<TokenTableProps> = ({
               <td className="px-1">
                 <Stat
                   type={isPositiveNumber(token?.day) ? "success" : "danger"}
-                  label={token?.day}
+                  label={token?.day.replace("-", "")}
                 />
               </td>
               <td className="px-1">
                 <Stat
                   type={isPositiveNumber(token?.week) ? "success" : "danger"}
-                  label={token?.week}
+                  label={token?.week.replace("-", "")}
                 />
               </td>
               <td className="px-1">
                 <Stat
                   type={isPositiveNumber(token?.month) ? "success" : "danger"}
-                  label={token?.month}
+                  label={token?.month.replace("-", "")}
                 />
               </td>
               <td className="px-1">
                 <Stat
                   type={isPositiveNumber(token?.year) ? "success" : "danger"}
-                  label={token?.year}
+                  label={token?.year.replace("-", "").replace("-", "")}
                 />
               </td>
             </tr>
