@@ -1,4 +1,3 @@
-import { rest } from "msw";
 import { expect } from "@storybook/jest";
 import {
   userEvent,
@@ -6,8 +5,12 @@ import {
   waitForElementToBeRemoved,
 } from "@storybook/testing-library";
 
-import { SupportedCurrenciesTestData, baseTokenUrl } from "src/constant";
+import { SupportedCurrenciesTestData } from "src/constant";
 import { SearchAssetWidget } from "./SearchAssetWidget";
+import {
+  supportedCurrenciesErrorHandler,
+  supportedCurrenciesSuccessHandler,
+} from "src/mock";
 
 import type { Meta, StoryFn } from "@storybook/react";
 
@@ -24,29 +27,11 @@ export const SearchAssetWidgetSuccess = Template.bind({});
 export const SearchAssetWidgetError = Template.bind({});
 
 SearchAssetWidgetSuccess.parameters = {
-  msw: [
-    rest.get(
-      `${baseTokenUrl}/api/proxy?path=wallet/supportedCurrencies`,
-      (_req, res, ctx) => {
-        return res(
-          ctx.json({
-            payload: SupportedCurrenciesTestData,
-          })
-        );
-      }
-    ),
-  ],
+  msw: [...supportedCurrenciesSuccessHandler],
 };
 
 SearchAssetWidgetError.parameters = {
-  msw: [
-    rest.get(
-      `${baseTokenUrl}/api/proxy?path=wallet/supportedCurrencies`,
-      (_req, res, ctx) => {
-        return res(ctx.delay(800), ctx.status(500));
-      }
-    ),
-  ],
+  msw: [...supportedCurrenciesErrorHandler],
 };
 
 SearchAssetWidgetSuccess.play = async ({ canvasElement, step }) => {

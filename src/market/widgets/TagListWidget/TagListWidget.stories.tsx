@@ -1,9 +1,8 @@
-import { rest } from "msw";
 import { expect } from "@storybook/jest";
 import { within, waitForElementToBeRemoved } from "@storybook/testing-library";
 
 import { TagListWidget } from "./TagListWidget";
-import { TagListTestData } from "src/constant";
+import { tagListErrorHandler, tagListSuccessHandler } from "src/mock";
 
 import type { Meta, StoryFn } from "@storybook/react";
 
@@ -23,25 +22,11 @@ export const TagListWidgetSuccess = Template.bind({});
 export const TagListWidgetError = Template.bind({});
 
 TagListWidgetSuccess.parameters = {
-  msw: [
-    rest.get(
-      `${process.env.STORYBOOK_PUBLIC_CONTENT_API}/market-tags?language.name=ID&_sort=order:ASC`,
-      (_req, res, ctx) => {
-        return res(ctx.json(TagListTestData));
-      }
-    ),
-  ],
+  msw: [...tagListSuccessHandler],
 };
 
 TagListWidgetError.parameters = {
-  msw: [
-    rest.get(
-      `${process.env.STORYBOOK_PUBLIC_CONTENT_API}/market-tags?language.name=ID&_sort=order:ASC`,
-      (_req, res, ctx) => {
-        return res(ctx.delay(800), ctx.status(500));
-      }
-    ),
-  ],
+  msw: [...tagListErrorHandler],
 };
 
 TagListWidgetSuccess.play = async ({ canvasElement, step }) => {
