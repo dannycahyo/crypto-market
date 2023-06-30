@@ -1,3 +1,5 @@
+import { baseTokenUrl, baseContentUrl } from "src/constant";
+
 import { Currency, MarketTag, PriceChange } from "./models";
 
 type MarketTagParams = {
@@ -11,14 +13,8 @@ type MarketTagDetailParams = {
 };
 
 async function getSupportedCurrencies(): Promise<Currency[]> {
-  const baseUrl =
-    process.env.NODE_ENV === "development"
-      ? process.env.NEXT_PUBLIC_BASE_URL_DEV
-      : process.env.NEXT_PUBLIC_BASE_URL_PROD ??
-        process.env.STORYBOOK_PUBLIC_BASE_URL_PROD;
-
   const response = await fetch(
-    `${baseUrl}/api/proxy?path=wallet/supportedCurrencies`
+    `${baseTokenUrl}/api/proxy?path=wallet/supportedCurrencies`
   );
 
   if (!response.ok) {
@@ -31,13 +27,9 @@ async function getSupportedCurrencies(): Promise<Currency[]> {
 }
 
 async function getPriceChanges(): Promise<PriceChange[]> {
-  const baseUrl =
-    process.env.NODE_ENV === "development"
-      ? process.env.NEXT_PUBLIC_BASE_URL_DEV
-      : process.env.NEXT_PUBLIC_BASE_URL_PROD ??
-        process.env.STORYBOOK_PUBLIC_BASE_URL_PROD;
-
-  const response = await fetch(`${baseUrl}/api/proxy?path=trade/price-changes`);
+  const response = await fetch(
+    `${baseTokenUrl}/api/proxy?path=trade/price-changes`
+  );
 
   if (!response.ok) {
     throw new Error("Network response was not ok");
@@ -52,11 +44,8 @@ async function getMarketTags({
   language,
   sort,
 }: MarketTagParams): Promise<MarketTag[]> {
-  const baseUrl =
-    process.env.NEXT_PUBLIC_CONTENT_API ??
-    process.env.STORYBOOK_PUBLIC_CONTENT_API;
   const response = await fetch(
-    `${baseUrl}/market-tags?language.name=${language}&_sort=order:${sort}`
+    `${baseContentUrl}/market-tags?language.name=${language}&_sort=order:${sort}`
   );
 
   if (!response.ok) {
@@ -71,11 +60,8 @@ async function getMarketTagDetail({
   slug,
   language,
 }: MarketTagDetailParams): Promise<MarketTag[]> {
-  const baseUrl =
-    process.env.NEXT_PUBLIC_CONTENT_API ??
-    process.env.STORYBOOK_PUBLIC_CONTENT_API;
   const response = await fetch(
-    `${baseUrl}/market-tags?slug_eq=${slug}&language.name=${language}`
+    `${baseContentUrl}/market-tags?slug_eq=${slug}&language.name=${language}`
   );
 
   if (!response.ok) {

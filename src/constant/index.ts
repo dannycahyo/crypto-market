@@ -1,3 +1,3 @@
 export * from "./tokenData";
-export * from "./currencies";
 export * from "./testData";
+export * from "./baseUrl";
