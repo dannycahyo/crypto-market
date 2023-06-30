@@ -439,6 +439,28 @@ const SupportedCurrenciesTestData = [
       },
     ],
   },
+  {
+    currencyGroup: "COMP",
+    color: "#00D395",
+    currencySymbol: "COMP",
+    name: "Compound",
+    logo: "https://s3-ap-southeast-1.amazonaws.com/static.pintu.co.id/assets/images/logo/circle_COMP.svg",
+    decimal_point: 18,
+    listingDate: "2020-09-24T15:17:38Z",
+    wallets: [
+      {
+        currencyGroup: "COMP",
+        tokenSymbol: "COMP",
+        decimal_point: 18,
+        tokenType: "ERC-20",
+        blockchain: "Ethereum",
+        explorer: "https://etherscan.io/tx/",
+        listingDate: "2020-09-24T15:17:38Z",
+        blockchainName: "Ethereum",
+        logo: "https://s3.ap-southeast-1.amazonaws.com/static.pintu.co.id/assets/images/logo/blockchain/ERC-20.svg",
+      },
+    ],
+  },
 ];
 
 export {

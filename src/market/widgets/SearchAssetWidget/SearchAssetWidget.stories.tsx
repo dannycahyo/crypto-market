@@ -76,7 +76,7 @@ SearchAssetWidgetSuccess.play = async ({ canvasElement, step }) => {
     );
 
     const filteredCurrenciesByBitCoin = SupportedCurrenciesTestData.filter(
-      ({ name }) => name !== "Ethereum"
+      ({ name }) => name !== "Ethereum" && name !== "Compound"
     );
 
     {

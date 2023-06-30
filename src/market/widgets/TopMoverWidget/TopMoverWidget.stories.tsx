@@ -61,6 +61,14 @@ TopMoverWidgetSuccess.parameters = {
             month: "0.13",
             year: "73.69",
           },
+          {
+            pair: "comp/idr",
+            latestPrice: Math.floor(Math.random() * 100000000).toString(),
+            day: (Math.random() * 200 - 100).toFixed(2),
+            week: "80.33",
+            month: "48.65",
+            year: "9.87",
+          },
         ];
         return res(
           ctx.json({

@@ -1,4 +1,4 @@
-import { Currency, PriceChange, TokenData } from "./models";
+import { Currency, CurrencyMarketTag, PriceChange, TokenData } from "./models";
 
 function mergeCurrencyWithPriceChanges(
   supportedCurrencies?: Currency[],
@@ -37,4 +37,21 @@ function mergeCurrencyWithPriceChanges(
   return mergedData;
 }
 
-export { mergeCurrencyWithPriceChanges };
+const filterCurrenciesByMarketTagCurrency = (
+  currencies?: Currency[],
+  marketTagCurrencies?: CurrencyMarketTag[]
+): Currency[] => {
+  if (!currencies || !marketTagCurrencies) {
+    return [];
+  }
+
+  const currencySymbols = new Set(
+    marketTagCurrencies.map((marketTagCurrency) => marketTagCurrency.name)
+  );
+
+  return currencies.filter((currency) =>
+    currencySymbols.has(currency.currencySymbol)
+  );
+};
+
+export { mergeCurrencyWithPriceChanges, filterCurrenciesByMarketTagCurrency };
