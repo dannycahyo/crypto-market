@@ -4,19 +4,25 @@ import {
   useGetPriceChanges,
   useGetSupportedCurrencies,
 } from "src/market/services";
-import { Skeleton } from "src/uikits";
+import { GeneralError, Skeleton } from "src/uikits";
 import { mergeCurrencyWithPriceChanges } from "src/market/utils";
 import { compose, curry } from "src/utils";
 
 import type { TokenDetailByDate } from "src/market/models";
 
 const TopMoverWidget = () => {
-  const { data: supportedCurrencies, isLoading: isLoadingSupportedCurrencies } =
-    useGetSupportedCurrencies();
-  const { data: priceChanges, isLoading: isLoadingPriceChanges } =
-    useGetPriceChanges({
-      refetchInterval: 1000,
-    });
+  const {
+    data: supportedCurrencies,
+    isLoading: isLoadingSupportedCurrencies,
+    isError: isErrorSupportedCurrencies,
+  } = useGetSupportedCurrencies();
+  const {
+    data: priceChanges,
+    isLoading: isLoadingPriceChanges,
+    isError: isErrorPriceChanges,
+  } = useGetPriceChanges({
+    refetchInterval: 1000,
+  });
 
   const mapTopSixSortedCurrenciesWithPriceChangeByDay = (
     tokenData?: TokenData[]
@@ -78,24 +84,31 @@ const TopMoverWidget = () => {
     isLoadingPriceChanges,
   ].every(Boolean);
 
+  const isErrorLoadingTokenData = [
+    isErrorSupportedCurrencies,
+    isErrorPriceChanges,
+  ].some(Boolean);
+
+  if (isLoadingTokenData) return <Skeleton />;
+  if (isErrorLoadingTokenData)
+    return (
+      <GeneralError message="There is something wrong when getting the token content. Please try again later." />
+    );
+
   return (
     <div className="py-4">
       <h2 className="mb-2 text-xl font-bold text-black">
         🔥Top Movers (24 JAM)
       </h2>
-      {isLoadingTokenData ? (
-        <Skeleton />
-      ) : (
-        <div className="overflow-x-auto whitespace-nowrap">
-          <div className="flex gap-4 sm:grid sm:grid-cols-6 sm:gap-6">
-            {tokenData?.map((token) => (
-              <div className="flex-shrink-0" key={token.currencySymbol}>
-                <TokenCard {...token} />
-              </div>
-            ))}
-          </div>
+      <div className="overflow-x-auto whitespace-nowrap">
+        <div className="flex gap-4 sm:grid sm:grid-cols-6 sm:gap-6">
+          {tokenData?.map((token) => (
+            <div className="flex-shrink-0" key={token.currencySymbol}>
+              <TokenCard {...token} />
+            </div>
+          ))}
         </div>
-      )}
+      </div>
     </div>
   );
 };
