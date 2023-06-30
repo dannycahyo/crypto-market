@@ -21,6 +21,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
         className="rounded-md border border-gray-300  bg-gray-100 py-2 pl-12 pr-10 text-gray-600 focus:border-blue-500 focus:outline-none focus:ring-blue-500"
         value={value}
         onChange={onChange}
+        aria-label="searchInput"
       />
       <div className="pointer-events-none absolute inset-y-0 left-4 flex items-center pr-3">
         <FaSearch className="h-5 w-5 text-gray-400" />

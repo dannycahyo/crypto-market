@@ -15,7 +15,14 @@ const CurrencyList: React.FC<CurrencyListProps> = ({ currencies }) => {
       ) : (
         <>
           {currencies?.map((currency) => (
-            <li key={currency.currencySymbol}>
+            // Notes* Somehow the role of the list item doesn't get assign to the li.
+            // So we need to assign it manually for the accessibillity and testing purposes.
+            // eslint-disable-next-line jsx-a11y/no-redundant-roles
+            <li
+              key={currency.currencySymbol}
+              role="listitem"
+              aria-label={currency.name}
+            >
               <div className="flex items-center justify-between">
                 <div className="flex gap-2">
                   <Image
