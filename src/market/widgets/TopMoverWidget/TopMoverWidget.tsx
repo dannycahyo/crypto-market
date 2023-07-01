@@ -21,7 +21,7 @@ const TopMoverWidget = () => {
     isLoading: isLoadingPriceChanges,
     isError: isErrorPriceChanges,
   } = useGetPriceChanges({
-    refetchInterval: 1000,
+    refetchInterval: 3000,
   });
 
   const mapTopSixSortedCurrenciesWithPriceChangeByDay = (
