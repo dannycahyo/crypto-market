@@ -1,33 +1,32 @@
-import { useState } from "react";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa";
 
 import type React from "react";
 
 type TokenTableColumnProps = {
   title: string;
+  isActiveColumn: boolean;
+  sortingOrder?: "asc" | "desc";
+  onColumnClick: () => void;
   onUpButtonClick: (isClicked: boolean) => void;
   onDownButtonClick: (isClicked: boolean) => void;
 };
 
 const TokenTableColumn: React.FC<TokenTableColumnProps> = ({
   title,
+  isActiveColumn,
+  sortingOrder,
+  onColumnClick,
   onUpButtonClick,
   onDownButtonClick,
 }) => {
-  const [isUpButtonClicked, setIsUpButtonClicked] = useState<boolean>(false);
-  const [isDownButtonClicked, setIsDownButtonClicked] =
-    useState<boolean>(false);
-
   const handleUpButtonClick = () => {
-    setIsUpButtonClicked((prev) => !prev);
-    setIsDownButtonClicked(false);
-    onUpButtonClick(isUpButtonClicked);
+    onColumnClick();
+    onUpButtonClick(isActiveColumn);
   };
 
   const handleDownButtonClick = () => {
-    setIsDownButtonClicked((prev) => !prev);
-    setIsUpButtonClicked(false);
-    onDownButtonClick(isDownButtonClicked);
+    onColumnClick();
+    onDownButtonClick(isActiveColumn);
   };
 
   return (
@@ -37,15 +36,21 @@ const TokenTableColumn: React.FC<TokenTableColumnProps> = ({
         <button onClick={handleUpButtonClick} title={`descOrder ${title}`}>
           <FaChevronUp
             size={12}
-            className={`${isUpButtonClicked ? "text-black" : "text-gray-200"}`}
+            className={
+              isActiveColumn && sortingOrder === "desc"
+                ? "text-black"
+                : "text-gray-200"
+            }
           />
         </button>
         <button onClick={handleDownButtonClick} title={`ascOrder ${title}`}>
           <FaChevronDown
             size={12}
-            className={`${
-              isDownButtonClicked ? "text-black" : "text-gray-200"
-            }`}
+            className={
+              isActiveColumn && sortingOrder === "asc"
+                ? "text-black"
+                : "text-gray-200"
+            }
           />
         </button>
       </div>
