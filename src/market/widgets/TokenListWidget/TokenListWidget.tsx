@@ -45,7 +45,7 @@ const TokenListWidget = ({ source, slug }: TokenListWidgetProps) => {
     refetchInterval: 1000,
   });
 
-  const [sortByCategory, setSortByCategory] = useState<string>("");
+  const [sortByCategory, setSortByCategory] = useState<string>();
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">();
   const [selectedDate, setSelectedDate] = useState<string>("day");
 
@@ -135,6 +135,10 @@ const TokenListWidget = ({ source, slug }: TokenListWidgetProps) => {
           data={tokenData}
           onFilterBy={(category) => setSortByCategory(category)}
           onSortBy={(order) => setSortOrder(order)}
+          onResetSortByCategory={() => {
+            setSortByCategory(undefined);
+            setSortOrder(undefined);
+          }}
         />
       </div>
       <div className="block sm:hidden">

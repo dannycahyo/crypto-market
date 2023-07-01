@@ -12,12 +12,14 @@ type TokenTableProps = {
   data?: TokenData[];
   onFilterBy: (category: string) => void;
   onSortBy: (sort?: "asc" | "desc") => void;
+  onResetSortByCategory: () => void;
 };
 
 const TokenTable: React.FC<TokenTableProps> = ({
   data,
   onFilterBy,
   onSortBy,
+  onResetSortByCategory,
 }) => {
   return (
     <div className="overflow-x-auto">
@@ -31,65 +33,105 @@ const TokenTable: React.FC<TokenTableProps> = ({
             <th>
               <TokenTableColumn
                 title="Harga"
-                onUpButtonClick={() => {
-                  onFilterBy("latestPrice");
-                  onSortBy("desc");
+                onUpButtonClick={(isClicked) => {
+                  if (isClicked) {
+                    onResetSortByCategory();
+                  } else {
+                    onFilterBy("latestPrice");
+                    onSortBy("desc");
+                  }
                 }}
-                onDownButtonClick={() => {
-                  onFilterBy("latestPrice");
-                  onSortBy("asc");
+                onDownButtonClick={(isClicked) => {
+                  if (isClicked) {
+                    onResetSortByCategory();
+                  } else {
+                    onFilterBy("latestPrice");
+                    onSortBy("asc");
+                  }
                 }}
               />
             </th>
             <th>
               <TokenTableColumn
                 title="24 JAM"
-                onUpButtonClick={() => {
-                  onFilterBy("day");
-                  onSortBy("desc");
+                onUpButtonClick={(isClicked) => {
+                  if (isClicked) {
+                    onResetSortByCategory();
+                  } else {
+                    onFilterBy("day");
+                    onSortBy("desc");
+                  }
                 }}
-                onDownButtonClick={() => {
-                  onFilterBy("day");
-                  onSortBy("asc");
+                onDownButtonClick={(isClicked) => {
+                  if (isClicked) {
+                    onResetSortByCategory();
+                  } else {
+                    onFilterBy("day");
+                    onSortBy("asc");
+                  }
                 }}
               />
             </th>
             <th>
               <TokenTableColumn
                 title="1 MGG"
-                onUpButtonClick={() => {
-                  onFilterBy("week");
-                  onSortBy("desc");
+                onUpButtonClick={(isClicked) => {
+                  if (isClicked) {
+                    onResetSortByCategory();
+                  } else {
+                    onFilterBy("week");
+                    onSortBy("desc");
+                  }
                 }}
-                onDownButtonClick={() => {
-                  onFilterBy("week");
-                  onSortBy("asc");
+                onDownButtonClick={(isClicked) => {
+                  if (isClicked) {
+                    onResetSortByCategory();
+                  } else {
+                    onFilterBy("week");
+                    onSortBy("asc");
+                  }
                 }}
               />
             </th>
             <th>
               <TokenTableColumn
                 title="1 BLN"
-                onUpButtonClick={() => {
-                  onFilterBy("month");
-                  onSortBy("desc");
+                onUpButtonClick={(isClicked) => {
+                  if (isClicked) {
+                    onResetSortByCategory();
+                  } else {
+                    onFilterBy("month");
+                    onSortBy("desc");
+                  }
                 }}
-                onDownButtonClick={() => {
-                  onFilterBy("month");
-                  onSortBy("asc");
+                onDownButtonClick={(isClicked) => {
+                  if (isClicked) {
+                    onResetSortByCategory();
+                  } else {
+                    onFilterBy("month");
+                    onSortBy("asc");
+                  }
                 }}
               />
             </th>
             <th>
               <TokenTableColumn
                 title="1 THN"
-                onUpButtonClick={() => {
-                  onFilterBy("year");
-                  onSortBy("desc");
+                onUpButtonClick={(isClicked) => {
+                  if (isClicked) {
+                    onResetSortByCategory();
+                  } else {
+                    onFilterBy("year");
+                    onSortBy("desc");
+                  }
                 }}
-                onDownButtonClick={() => {
-                  onFilterBy("year");
-                  onSortBy("asc");
+                onDownButtonClick={(isClicked) => {
+                  if (isClicked) {
+                    onResetSortByCategory();
+                  } else {
+                    onFilterBy("year");
+                    onSortBy("asc");
+                  }
                 }}
               />
             </th>
