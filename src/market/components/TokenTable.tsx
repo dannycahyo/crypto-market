@@ -31,41 +31,43 @@ const TokenTable: React.FC<TokenTableProps> = ({
 
   const handleColumnClick = (column: string) => {
     if (column === activeColumn?.name) {
-      onResetSortByCategory();
-      setActiveColumn(undefined);
+      const newOrder = activeColumn.order === "asc" ? "desc" : "asc";
+      setActiveColumn((prevColumn) => ({ ...prevColumn, order: newOrder }));
     } else {
-      setActiveColumn((prev) => ({
-        ...prev,
-        name: column,
-      }));
+      setActiveColumn((prevColumn) => ({ ...prevColumn, name: column }));
       onFilterBy(column);
-      onSortBy("desc");
     }
   };
 
-  const handleUpButtonClick = (isActiveColumn: boolean) => {
-    if (isActiveColumn) {
+  const handleUpButtonClick = (
+    isActiveColumn: boolean,
+    sort: "asc" | "desc"
+  ) => {
+    if (isActiveColumn && activeColumn?.order === sort) {
       onResetSortByCategory();
       setActiveColumn(undefined);
     } else {
-      setActiveColumn((prev) => ({
-        ...prev,
-        order: "desc",
+      setActiveColumn((prevColumn) => ({
+        ...prevColumn,
+        order: sort,
       }));
-      onSortBy("desc");
+      onSortBy(sort);
     }
   };
 
-  const handleDownButtonClick = (isActiveColumn: boolean) => {
-    if (isActiveColumn) {
+  const handleDownButtonClick = (
+    isActiveColumn: boolean,
+    sort: "asc" | "desc"
+  ) => {
+    if (isActiveColumn && activeColumn?.order === sort) {
       onResetSortByCategory();
       setActiveColumn(undefined);
     } else {
-      setActiveColumn((prev) => ({
-        ...prev,
-        order: "asc",
+      setActiveColumn((prevColumn) => ({
+        ...prevColumn,
+        order: sort,
       }));
-      onSortBy("asc");
+      onSortBy(sort);
     }
   };
 
@@ -84,8 +86,12 @@ const TokenTable: React.FC<TokenTableProps> = ({
                 isActiveColumn={activeColumn?.name === "latestPrice"}
                 sortingOrder={activeColumn?.order}
                 onColumnClick={() => handleColumnClick("latestPrice")}
-                onUpButtonClick={handleUpButtonClick}
-                onDownButtonClick={handleDownButtonClick}
+                onUpButtonClick={(isActive) =>
+                  handleUpButtonClick(isActive, "desc")
+                }
+                onDownButtonClick={(isActive) =>
+                  handleDownButtonClick(isActive, "asc")
+                }
               />
             </th>
             <th>
@@ -94,8 +100,12 @@ const TokenTable: React.FC<TokenTableProps> = ({
                 isActiveColumn={activeColumn?.name === "day"}
                 sortingOrder={activeColumn?.order}
                 onColumnClick={() => handleColumnClick("day")}
-                onUpButtonClick={handleUpButtonClick}
-                onDownButtonClick={handleDownButtonClick}
+                onUpButtonClick={(isActive) =>
+                  handleUpButtonClick(isActive, "desc")
+                }
+                onDownButtonClick={(isActive) =>
+                  handleDownButtonClick(isActive, "asc")
+                }
               />
             </th>
             <th>
@@ -104,8 +114,12 @@ const TokenTable: React.FC<TokenTableProps> = ({
                 isActiveColumn={activeColumn?.name === "week"}
                 sortingOrder={activeColumn?.order}
                 onColumnClick={() => handleColumnClick("week")}
-                onUpButtonClick={handleUpButtonClick}
-                onDownButtonClick={handleDownButtonClick}
+                onUpButtonClick={(isActive) =>
+                  handleUpButtonClick(isActive, "desc")
+                }
+                onDownButtonClick={(isActive) =>
+                  handleDownButtonClick(isActive, "asc")
+                }
               />
             </th>
             <th>
@@ -114,8 +128,12 @@ const TokenTable: React.FC<TokenTableProps> = ({
                 isActiveColumn={activeColumn?.name === "month"}
                 sortingOrder={activeColumn?.order}
                 onColumnClick={() => handleColumnClick("month")}
-                onUpButtonClick={handleUpButtonClick}
-                onDownButtonClick={handleDownButtonClick}
+                onUpButtonClick={(isActive) =>
+                  handleUpButtonClick(isActive, "desc")
+                }
+                onDownButtonClick={(isActive) =>
+                  handleDownButtonClick(isActive, "asc")
+                }
               />
             </th>
             <th>
@@ -124,8 +142,12 @@ const TokenTable: React.FC<TokenTableProps> = ({
                 isActiveColumn={activeColumn?.name === "year"}
                 sortingOrder={activeColumn?.order}
                 onColumnClick={() => handleColumnClick("year")}
-                onUpButtonClick={handleUpButtonClick}
-                onDownButtonClick={handleDownButtonClick}
+                onUpButtonClick={(isActive) =>
+                  handleUpButtonClick(isActive, "desc")
+                }
+                onDownButtonClick={(isActive) =>
+                  handleDownButtonClick(isActive, "asc")
+                }
               />
             </th>
           </tr>
