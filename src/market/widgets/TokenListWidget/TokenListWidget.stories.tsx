@@ -39,6 +39,7 @@ export const TokenListWidgetByMarketSuccess = Template.bind({});
 export const TokenListWidgetByMarketError = Template.bind({});
 export const TokenListWidgetByMarketTagSuccess = Template.bind({});
 export const TokenListWidgetByMarketTagError = Template.bind({});
+export const MobileViewTokenListWidget = Template.bind({});
 
 TokenListWidgetByMarketSuccess.args = {
   source: "market",
@@ -56,6 +57,10 @@ TokenListWidgetByMarketTagSuccess.args = {
 TokenListWidgetByMarketTagError.args = {
   source: "market-tag",
   slug: testSlug.layer1Slug,
+};
+
+MobileViewTokenListWidget.args = {
+  source: "market",
 };
 
 TokenListWidgetByMarketSuccess.parameters = {
@@ -78,6 +83,13 @@ TokenListWidgetByMarketTagError.parameters = {
     ...currenciesAndPriceChangesErrorHandler,
     ...marketTagDetailErrorHandler,
   ],
+};
+
+MobileViewTokenListWidget.parameters = {
+  msw: [...currenciesAndPriceChangesSuccessHandler],
+  viewport: {
+    defaultViewport: "mobile1",
+  },
 };
 
 TokenListWidgetByMarketSuccess.play = async ({ canvasElement, step }) => {
@@ -281,4 +293,84 @@ TokenListWidgetByMarketTagError.play = async ({ canvasElement, step }) => {
       "There is something wrong when getting the token content. Please try again later."
     )
   ).toBeInTheDocument();
+};
+
+MobileViewTokenListWidget.play = async ({ canvasElement, step }) => {
+  const canvas = within(canvasElement);
+
+  await step("wait for loading to be finished", async () => {
+    await waitForElementToBeRemoved(
+      () => canvas.queryAllByRole("progressbar"),
+      {
+        timeout: 30000,
+      }
+    );
+  });
+
+  for (const { name } of SupportedCurrenciesTestData) {
+    await step(`check if ${name} is present`, async () => {
+      const heading = await canvas.findByRole("heading", { name });
+      expect(heading).toBeInTheDocument();
+    });
+  }
+
+  const tokenFilterByDateSelectElement = canvas.getByRole("combobox", {
+    name: "tokenFilterByDate",
+  });
+
+  expect(tokenFilterByDateSelectElement).toBeInTheDocument();
+
+  const selectItemTokenFilterByDateSelectElement = async (
+    selectItem: string
+  ) => {
+    await step(`select ${selectItem} option`, async () => {
+      userEvent.selectOptions(tokenFilterByDateSelectElement, selectItem);
+    });
+  };
+
+  const getPricePerformancePercentageValues = async () => {
+    const pricePerformancePercentageHeadings = await canvas.findAllByRole(
+      "heading",
+      {
+        level: 3,
+      }
+    );
+
+    const pricePerformancePercentageValues = pricePerformancePercentageHeadings
+      .map((heading) => heading.textContent)
+      .filter((str) => str?.endsWith("%"));
+
+    return pricePerformancePercentageValues;
+  };
+
+  const initialPricePerformancePercentageValues =
+    await getPricePerformancePercentageValues();
+
+  await selectItemTokenFilterByDateSelectElement("24 JAM");
+  const pricePerformancePercentageValues24Jam =
+    await getPricePerformancePercentageValues();
+  expect(pricePerformancePercentageValues24Jam).toEqual(
+    initialPricePerformancePercentageValues
+  );
+
+  await selectItemTokenFilterByDateSelectElement("1 MGG");
+  const pricePerformancePercentageValues1Mgg =
+    await getPricePerformancePercentageValues();
+  expect(pricePerformancePercentageValues1Mgg).not.toEqual(
+    initialPricePerformancePercentageValues
+  );
+
+  await selectItemTokenFilterByDateSelectElement("1 BLN");
+  const pricePerformancePercentageValues1Bln =
+    await getPricePerformancePercentageValues();
+  expect(pricePerformancePercentageValues1Bln).not.toEqual(
+    initialPricePerformancePercentageValues
+  );
+
+  await selectItemTokenFilterByDateSelectElement("1 THN");
+  const pricePerformancePercentageValues1Thn =
+    await getPricePerformancePercentageValues();
+  expect(pricePerformancePercentageValues1Thn).not.toEqual(
+    initialPricePerformancePercentageValues
+  );
 };

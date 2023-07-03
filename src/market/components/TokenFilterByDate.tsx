@@ -15,6 +15,7 @@ const TokenFilterByDate: React.FC<TokenFilterByDateProps> = ({
         <select
           className="select-bordered select select-sm max-w-xs bg-white"
           onChange={(e) => onFilterToken(e.target.value)}
+          title="tokenFilterByDate"
         >
           <option value="day">24 JAM</option>
           <option value="week">1 MGG</option>

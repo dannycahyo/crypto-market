@@ -34,9 +34,9 @@ const Stat: React.FC<StatProps> = ({ type, label, size = "medium" }) => {
   return (
     <div className="flex items-center">
       {renderIcon()}
-      <h2 className={`ml-1 font-bold ${getLabelSize()} ${getLabelColor()}`}>
+      <h3 className={`ml-1 font-bold ${getLabelSize()} ${getLabelColor()}`}>
         {`${label} %`}
-      </h2>
+      </h3>
     </div>
   );
 };

@@ -2214,6 +2214,21 @@
     "@storybook/preview-api" "7.0.23"
     "@storybook/theming" "7.0.23"
 
+"@storybook/addon-viewport@^7.0.24":
+  version "7.0.24"
+  resolved "https://registry.npmjs.org/@storybook/addon-viewport/-/addon-viewport-7.0.24.tgz"
+  integrity sha512-bc3TR+feemGxVP1QQT6OsFSldHjLToJNuQAGd5EEBsDFhcMTsmitiGVoxIylqIhfioL9zauLIsk5eLZ/TYxuXQ==
+  dependencies:
+    "@storybook/client-logger" "7.0.24"
+    "@storybook/components" "7.0.24"
+    "@storybook/core-events" "7.0.24"
+    "@storybook/global" "^5.0.0"
+    "@storybook/manager-api" "7.0.24"
+    "@storybook/preview-api" "7.0.24"
+    "@storybook/theming" "7.0.24"
+    memoizerific "^1.11.3"
+    prop-types "^15.7.2"
+
 "@storybook/addon-viewport@7.0.23":
   version "7.0.23"
   resolved "https://registry.npmjs.org/@storybook/addon-viewport/-/addon-viewport-7.0.23.tgz"
