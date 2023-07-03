@@ -42,7 +42,7 @@ const TokenListWidget = ({ source, slug }: TokenListWidgetProps) => {
     isLoading: isLoadingPriceChanges,
     isError: isErrorPriceChanges,
   } = useGetPriceChanges({
-    refetchInterval: 3000,
+    refetchInterval: 1000,
   });
 
   const [sortByCategory, setSortByCategory] = useState<string>();
