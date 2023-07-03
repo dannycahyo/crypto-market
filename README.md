@@ -86,7 +86,7 @@ npm test-storybook
 To get the coverage of the overall test, use:
 
 ```bash
-npm run test-storybook --coverage
+npm run test-storybook -- --coverage
 ```
 
 ## Project Architecture
