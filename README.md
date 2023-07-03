@@ -80,7 +80,7 @@ To run the test, use:
 Please kindly run the storybook server as well.
 
 ```bash
-npm test-storybook
+npm run test-storybook
 ```
 
 To get the coverage of the overall test, use:
@@ -157,6 +157,8 @@ src
     - fetcher.ts
     - services.ts
     - models.ts
+  - mock
+    - handler
   - pages
     - api
     - index.tsx
@@ -177,6 +179,8 @@ src
 - `hooks`: The `hooks` folder is responsible for housing custom React hooks. Hooks are reusable functions that encapsulate common logic or behaviors and can be shared across components. These hooks can be used to handle state management, or any other custom functionality.
 
 - `market`: The `market` module in this project follows a domain-driven development (DDD) approach, which aims to facilitate a well-organized folder structure and promote code clarity and maintainability. DDD emphasizes the separation and grouping of different components based on their respective domains, allowing for better organization and understanding of the codebase. The market module includes several folders that represent different layers and components, such as screens, widgets, components, fetcher, services, and models. Each of these folders encapsulates functionality related to a specific domain within the market module.
+
+- `mock`: The `mock` folder contains everything related to mocking, in this case it contains handlers for mocking API requests. It is used for testing purposes which can be used to simulate API responses.
 
 - `pages`: The `pages` folder contains the application's page components, which are responsible for handling the routing and mapping URLs to the appropriate screens. It may include API routes, index page, or other specific page components.
 
